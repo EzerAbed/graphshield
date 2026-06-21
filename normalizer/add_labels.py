@@ -1,4 +1,14 @@
-'S10': {'risk_level': 3, 'risk_label': 'High', 'exploitability': 0.7, 'blast_radius': 0.7},
+LABELS = {
+    'S01': {'risk_level': 0, 'risk_label': 'Safe',     'exploitability': 0.0, 'blast_radius': 0.0},
+    'S02': {'risk_level': 1, 'risk_label': 'Low',      'exploitability': 0.2, 'blast_radius': 0.3},
+    'S03': {'risk_level': 1, 'risk_label': 'Low',      'exploitability': 0.3, 'blast_radius': 0.2},
+    'S04': {'risk_level': 1, 'risk_label': 'Low',      'exploitability': 0.1, 'blast_radius': 0.1},
+    'S05': {'risk_level': 2, 'risk_label': 'Medium',   'exploitability': 0.3, 'blast_radius': 0.6},
+    'S06': {'risk_level': 2, 'risk_label': 'Medium',   'exploitability': 0.4, 'blast_radius': 0.6},
+    'S07': {'risk_level': 2, 'risk_label': 'Medium',   'exploitability': 0.5, 'blast_radius': 0.4},
+    'S08': {'risk_level': 2, 'risk_label': 'Medium',   'exploitability': 0.3, 'blast_radius': 0.5},
+    'S09': {'risk_level': 3, 'risk_label': 'High',     'exploitability': 0.6, 'blast_radius': 0.7},
+    'S10': {'risk_level': 3, 'risk_label': 'High', 'exploitability': 0.7, 'blast_radius': 0.7},
     'S11': {'risk_level': 4, 'risk_label': 'Critical', 'exploitability': 0.9, 'blast_radius': 0.9},
     'S12': {'risk_level': 3, 'risk_label': 'High', 'exploitability': 0.6, 'blast_radius': 0.8},
     'S13': {'risk_level': 4, 'risk_label': 'Critical', 'exploitability': 0.8, 'blast_radius': 0.9},
@@ -8,3 +18,4 @@
     'S17': {'risk_level': 2, 'risk_label': 'Medium', 'exploitability': 0.4, 'blast_radius': 0.3},
     'S18': {'risk_level': 4, 'risk_label': 'Critical', 'exploitability': 0.75, 'blast_radius': 0.8},
     'S19': {'risk_level': 1, 'risk_label': 'Low', 'exploitability': 0.15, 'blast_radius': 0.2},
+}
