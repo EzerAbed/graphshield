@@ -73,7 +73,7 @@ data "aws_ami" "amazon_linux" {
 # Two instances, NO iam_instance_profile attached to either — that's the point
 resource "aws_instance" "ec2_a" {
   ami                          = data.aws_ami.amazon_linux.id
-  instance_type                = "t2.micro"
+  instance_type                = "t3.micro"
   subnet_id                    = aws_subnet.public.id
   vpc_security_group_ids       = [aws_security_group.open_ports.id]
   associate_public_ip_address  = true
@@ -82,7 +82,7 @@ resource "aws_instance" "ec2_a" {
 
 resource "aws_instance" "ec2_b" {
   ami                          = data.aws_ami.amazon_linux.id
-  instance_type                = "t2.micro"
+  instance_type                = "t3.micro"
   subnet_id                    = aws_subnet.public.id
   vpc_security_group_ids       = [aws_security_group.open_ports.id]
   associate_public_ip_address  = true

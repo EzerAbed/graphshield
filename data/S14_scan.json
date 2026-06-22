@@ -1,0 +1,130 @@
+{
+  "scenario_id": "S14",
+  "scan_timestamp": "2026-06-22T22:23:18.940249",
+  "region": "us-east-1",
+  "ec2_instances": [
+    {
+      "resource_type": "ec2",
+      "instance_id": "i-097872e471be7300f",
+      "instance_type": "t3.micro",
+      "state": "running",
+      "public_ip": "13.219.241.254",
+      "private_ip": "10.14.1.185",
+      "internet_facing": true,
+      "subnet_id": "subnet-0682541d5c5d1b5ac",
+      "vpc_id": "vpc-0f06415cb7e10bdbc",
+      "iam_profile": "arn:aws:iam::670069047981:instance-profile/graphshield-s14-profile",
+      "security_groups": [
+        "sg-0eceaf8f7659b4560"
+      ],
+      "imds_v2": "optional",
+      "ebs_encrypted": true,
+      "tags": {
+        "Scenario": "S14",
+        "InternetFacing": "true"
+      }
+    }
+  ],
+  "security_groups": [
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-00d6fcd339527c2e5",
+      "group_name": "default",
+      "vpc_id": "vpc-0f06415cb7e10bdbc",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-00d6fcd339527c2e5"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-026cfa0d4d5ac8177",
+      "group_name": "default",
+      "vpc_id": "vpc-0e8eb30784bdb0981",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-026cfa0d4d5ac8177"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-0eceaf8f7659b4560",
+      "group_name": "graphshield-s14-wide-open",
+      "vpc_id": "vpc-0f06415cb7e10bdbc",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": true,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    }
+  ],
+  "s3_buckets": [
+    {
+      "resource_type": "s3",
+      "bucket_name": "graphshield-s14-public-s14unique01",
+      "is_public": true,
+      "encryption": true,
+      "versioning": "Disabled"
+    }
+  ],
+  "iam_roles": [
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s14-admin",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s14-admin",
+      "has_admin_access": true,
+      "has_s3_wildcard": false,
+      "privilege_depth": 3,
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "inline_policies": []
+    }
+  ],
+  "lambda_functions": [],
+  "rds_instances": [],
+  "cloudtrail": {
+    "resource_type": "cloudtrail",
+    "logging_enabled": false
+  }
+}

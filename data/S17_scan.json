@@ -1,0 +1,147 @@
+{
+  "scenario_id": "S17",
+  "scan_timestamp": "2026-06-22T22:27:24.776486",
+  "region": "us-east-1",
+  "ec2_instances": [
+    {
+      "resource_type": "ec2",
+      "instance_id": "i-00e503b14fc200149",
+      "instance_type": "t3.micro",
+      "state": "running",
+      "public_ip": "107.21.12.7",
+      "private_ip": "10.17.1.210",
+      "internet_facing": true,
+      "subnet_id": "subnet-0dc1b6dce8d08524f",
+      "vpc_id": "vpc-08bb0023fa90ccf3c",
+      "iam_profile": null,
+      "security_groups": [
+        "sg-016a7b3c9c9d6171c"
+      ],
+      "imds_v2": "optional",
+      "ebs_encrypted": true,
+      "tags": {
+        "InternetFacing": "true",
+        "Scenario": "S17",
+        "Name": "graphshield-s17-ec2-b"
+      }
+    },
+    {
+      "resource_type": "ec2",
+      "instance_id": "i-068da12a67a3626ea",
+      "instance_type": "t3.micro",
+      "state": "running",
+      "public_ip": "13.220.142.93",
+      "private_ip": "10.17.1.167",
+      "internet_facing": true,
+      "subnet_id": "subnet-0dc1b6dce8d08524f",
+      "vpc_id": "vpc-08bb0023fa90ccf3c",
+      "iam_profile": null,
+      "security_groups": [
+        "sg-016a7b3c9c9d6171c"
+      ],
+      "imds_v2": "optional",
+      "ebs_encrypted": true,
+      "tags": {
+        "Scenario": "S17",
+        "InternetFacing": "true",
+        "Name": "graphshield-s17-ec2-a"
+      }
+    }
+  ],
+  "security_groups": [
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-04a2c957d9d62c9bd",
+      "group_name": "default",
+      "vpc_id": "vpc-08bb0023fa90ccf3c",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-04a2c957d9d62c9bd"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-016a7b3c9c9d6171c",
+      "group_name": "graphshield-s17-open-ports",
+      "vpc_id": "vpc-08bb0023fa90ccf3c",
+      "ssh_open_world": true,
+      "rdp_open_world": true,
+      "all_traffic_open": false,
+      "inbound_rule_count": 2,
+      "rules": [
+        {
+          "IpProtocol": "tcp",
+          "FromPort": 22,
+          "ToPort": 22,
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        },
+        {
+          "IpProtocol": "tcp",
+          "FromPort": 3389,
+          "ToPort": 3389,
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-026cfa0d4d5ac8177",
+      "group_name": "default",
+      "vpc_id": "vpc-0e8eb30784bdb0981",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-026cfa0d4d5ac8177"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    }
+  ],
+  "s3_buckets": [],
+  "iam_roles": [],
+  "lambda_functions": [],
+  "rds_instances": [],
+  "cloudtrail": {
+    "resource_type": "cloudtrail",
+    "logging_enabled": false
+  }
+}

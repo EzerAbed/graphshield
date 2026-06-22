@@ -18,4 +18,10 @@ LABELS = {
     'S17': {'risk_level': 2, 'risk_label': 'Medium', 'exploitability': 0.4, 'blast_radius': 0.3},
     'S18': {'risk_level': 4, 'risk_label': 'Critical', 'exploitability': 0.75, 'blast_radius': 0.8},
     'S19': {'risk_level': 1, 'risk_label': 'Low', 'exploitability': 0.15, 'blast_radius': 0.2},
+    'S20': {'risk_level': 0, 'risk_label': 'Safe', 'exploitability': 0.0, 'blast_radius': 0.0},
+    'S21': {'risk_level': 2, 'risk_label': 'Medium', 'exploitability': 0.4, 'blast_radius': 0.5},
+    'S22': {'risk_level': 1, 'risk_label': 'Low', 'exploitability': 0.25, 'blast_radius': 0.2},
+    'S23': {'risk_level': 4, 'risk_label': 'Critical', 'exploitability': 0.85, 'blast_radius': 0.9},
+    'S24': {'risk_level': 1, 'risk_label': 'Low', 'exploitability': 0.3, 'blast_radius': 0.2},
+    'S25': {'risk_level': 3, 'risk_label': 'High', 'exploitability': 0.65, 'blast_radius': 0.7},
 }

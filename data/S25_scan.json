@@ -1,0 +1,133 @@
+{
+  "scenario_id": "S25",
+  "scan_timestamp": "2026-06-22T22:36:47.692472",
+  "region": "us-east-1",
+  "ec2_instances": [
+    {
+      "resource_type": "ec2",
+      "instance_id": "i-0a80dff571eba0fd8",
+      "instance_type": "t3.micro",
+      "state": "running",
+      "public_ip": "44.204.121.88",
+      "private_ip": "10.25.1.78",
+      "internet_facing": true,
+      "subnet_id": "subnet-0202b0ca7f1c079b3",
+      "vpc_id": "vpc-0f6c8ba69e0097b5e",
+      "iam_profile": "arn:aws:iam::670069047981:instance-profile/graphshield-s25-profile",
+      "security_groups": [
+        "sg-0259472c24bd26dd5"
+      ],
+      "imds_v2": "required",
+      "ebs_encrypted": true,
+      "tags": {
+        "Name": "graphshield-s25-ec2",
+        "Scenario": "S25",
+        "InternetFacing": "true"
+      }
+    }
+  ],
+  "security_groups": [
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-0259472c24bd26dd5",
+      "group_name": "graphshield-s25-open-ssh",
+      "vpc_id": "vpc-0f6c8ba69e0097b5e",
+      "ssh_open_world": true,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "tcp",
+          "FromPort": 22,
+          "ToPort": 22,
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-026cfa0d4d5ac8177",
+      "group_name": "default",
+      "vpc_id": "vpc-0e8eb30784bdb0981",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-026cfa0d4d5ac8177"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-0c83fa6d15f799b20",
+      "group_name": "default",
+      "vpc_id": "vpc-0f6c8ba69e0097b5e",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-0c83fa6d15f799b20"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    }
+  ],
+  "s3_buckets": [
+    {
+      "resource_type": "s3",
+      "bucket_name": "graphshield-s25-trail-s25unique01",
+      "is_public": false,
+      "encryption": true,
+      "versioning": "Disabled"
+    }
+  ],
+  "iam_roles": [
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s25-admin",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s25-admin",
+      "has_admin_access": true,
+      "has_s3_wildcard": false,
+      "privilege_depth": 3,
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "inline_policies": []
+    }
+  ],
+  "lambda_functions": [],
+  "rds_instances": [],
+  "cloudtrail": {
+    "resource_type": "cloudtrail",
+    "logging_enabled": true
+  }
+}

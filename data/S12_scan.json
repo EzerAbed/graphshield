@@ -1,0 +1,164 @@
+{
+  "scenario_id": "S12",
+  "scan_timestamp": "2026-06-22T22:18:43.404400",
+  "region": "us-east-1",
+  "ec2_instances": [
+    {
+      "resource_type": "ec2",
+      "instance_id": "i-052ed8f68469df3f9",
+      "instance_type": "t3.micro",
+      "state": "running",
+      "public_ip": "44.211.184.220",
+      "private_ip": "10.12.1.23",
+      "internet_facing": true,
+      "subnet_id": "subnet-0413666db0475707a",
+      "vpc_id": "vpc-0566206d424394ec0",
+      "iam_profile": "arn:aws:iam::670069047981:instance-profile/graphshield-s12-profile",
+      "security_groups": [
+        "sg-0ddf1b3fa7bb10cbd"
+      ],
+      "imds_v2": "optional",
+      "ebs_encrypted": true,
+      "tags": {
+        "Name": "graphshield-s12-ec2",
+        "InternetFacing": "true",
+        "Scenario": "S12"
+      }
+    }
+  ],
+  "security_groups": [
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-07f99186c5321a173",
+      "group_name": "graphshield-s12-rds-sg",
+      "vpc_id": "vpc-0566206d424394ec0",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "tcp",
+          "FromPort": 3306,
+          "ToPort": 3306,
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-0ddf1b3fa7bb10cbd"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-0894923733b8b4206",
+      "group_name": "default",
+      "vpc_id": "vpc-0566206d424394ec0",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-0894923733b8b4206"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-026cfa0d4d5ac8177",
+      "group_name": "default",
+      "vpc_id": "vpc-0e8eb30784bdb0981",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-026cfa0d4d5ac8177"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-0ddf1b3fa7bb10cbd",
+      "group_name": "graphshield-s12-open-ssh",
+      "vpc_id": "vpc-0566206d424394ec0",
+      "ssh_open_world": true,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "tcp",
+          "FromPort": 22,
+          "ToPort": 22,
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    }
+  ],
+  "s3_buckets": [],
+  "iam_roles": [
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s12-ec2-role",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s12-ec2-role",
+      "has_admin_access": false,
+      "has_s3_wildcard": false,
+      "privilege_depth": 1,
+      "attached_policies": [],
+      "inline_policies": [
+        "graphshield-s12-rds-connect"
+      ]
+    }
+  ],
+  "lambda_functions": [],
+  "rds_instances": [
+    {
+      "resource_type": "rds",
+      "db_identifier": "graphshield-s12-db-s12unique01",
+      "engine": "mysql",
+      "publicly_accessible": false,
+      "encrypted": false,
+      "security_groups": [
+        "sg-07f99186c5321a173"
+      ],
+      "multi_az": false,
+      "backup_retention_days": 0
+    }
+  ],
+  "cloudtrail": {
+    "resource_type": "cloudtrail",
+    "logging_enabled": false
+  }
+}

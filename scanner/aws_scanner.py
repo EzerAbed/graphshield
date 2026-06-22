@@ -4,6 +4,7 @@ import sys
 import os
 from datetime import datetime
 
+
 class AWSScanner:
     def __init__(self, region='us-east-1'):
         self.region = region
@@ -35,8 +36,10 @@ class AWSScanner:
                     'iam_profile': instance.get('IamInstanceProfile', {}).get('Arn', None),
                     'security_groups': [sg['GroupId'] for sg in instance.get('SecurityGroups', [])],
                     'imds_v2': instance.get('MetadataOptions', {}).get('HttpTokens', 'optional'),
-                    'ebs_encrypted': all(m.get('Ebs', {}).get('DeleteOnTermination', False)
-                                          for m in instance.get('BlockDeviceMappings', [])),
+                    'ebs_encrypted': all(
+                        m.get('Ebs', {}).get('DeleteOnTermination', False)
+                        for m in instance.get('BlockDeviceMappings', [])
+                    ),
                     'tags': {t['Key']: t['Value'] for t in instance.get('Tags', [])},
                 })
         return result
@@ -46,12 +49,18 @@ class AWSScanner:
         result = []
         sgs = self.ec2.describe_security_groups()['SecurityGroups']
         for sg in sgs:
-            open_ssh = any(r.get('FromPort') == 22 and '0.0.0.0/0' in [ip['CidrIp'] for ip in r.get('IpRanges', [])]
-                            for r in sg.get('IpPermissions', []))
-            open_rdp = any(r.get('FromPort') == 3389 and '0.0.0.0/0' in [ip['CidrIp'] for ip in r.get('IpRanges', [])]
-                            for r in sg.get('IpPermissions', []))
-            open_all = any(r.get('IpProtocol') == '-1' and '0.0.0.0/0' in [ip['CidrIp'] for ip in r.get('IpRanges', [])]
-                            for r in sg.get('IpPermissions', []))
+            open_ssh = any(
+                r.get('FromPort') == 22 and '0.0.0.0/0' in [ip['CidrIp'] for ip in r.get('IpRanges', [])]
+                for r in sg.get('IpPermissions', [])
+            )
+            open_rdp = any(
+                r.get('FromPort') == 3389 and '0.0.0.0/0' in [ip['CidrIp'] for ip in r.get('IpRanges', [])]
+                for r in sg.get('IpPermissions', [])
+            )
+            open_all = any(
+                r.get('IpProtocol') == '-1' and '0.0.0.0/0' in [ip['CidrIp'] for ip in r.get('IpRanges', [])]
+                for r in sg.get('IpPermissions', [])
+            )
             result.append({
                 'resource_type': 'security_group',
                 'group_id': sg['GroupId'],
@@ -75,8 +84,10 @@ class AWSScanner:
                 continue  # Only scan our project buckets
             try:
                 pub_block = self.s3.get_public_access_block(Bucket=name)['PublicAccessBlockConfiguration']
-                is_public = not all([pub_block.get('BlockPublicAcls'), pub_block.get('BlockPublicPolicy'),
-                                      pub_block.get('IgnorePublicAcls'), pub_block.get('RestrictPublicBuckets')])
+                is_public = not all([
+                    pub_block.get('BlockPublicAcls'), pub_block.get('BlockPublicPolicy'),
+                    pub_block.get('IgnorePublicAcls'), pub_block.get('RestrictPublicBuckets')
+                ])
             except Exception:
                 is_public = True  # No block = public
             try:
@@ -129,6 +140,79 @@ class AWSScanner:
             })
         return result
 
+    def scan_lambda_functions(self):
+        """Collect Lambda function configs and check for public Function URLs"""
+        result = []
+        try:
+            functions = self.lam.list_functions().get('Functions', [])
+        except Exception:
+            return result
+        for fn in functions:
+            name = fn['FunctionName']
+            if 'graphshield' not in name:
+                continue
+            is_public = False
+            try:
+                url_config = self.lam.get_function_url_config(FunctionName=name)
+                is_public = url_config.get('AuthType', 'AWS_IAM') == 'NONE'
+            except Exception:
+                is_public = False  # No Function URL configured
+
+            has_wildcard_role = False
+            role_arn = fn.get('Role', '')
+            role_name = role_arn.split('/')[-1] if role_arn else None
+            if role_name:
+                try:
+                    inline = self.iam.list_role_policies(RoleName=role_name)['PolicyNames']
+                    for pol_name in inline:
+                        doc = self.iam.get_role_policy(RoleName=role_name, PolicyName=pol_name)['PolicyDocument']
+                        for stmt in doc.get('Statement', []):
+                            actions = stmt.get('Action', [])
+                            if isinstance(actions, str):
+                                actions = [actions]
+                            if any(a == '*' or a.endswith(':*') for a in actions):
+                                has_wildcard_role = True
+                    attached = self.iam.list_attached_role_policies(RoleName=role_name)['AttachedPolicies']
+                    if any('AdministratorAccess' in p.get('PolicyName', '') for p in attached):
+                        has_wildcard_role = True
+                except Exception:
+                    pass
+
+            result.append({
+                'resource_type': 'lambda',
+                'function_name': name,
+                'function_arn': fn.get('FunctionArn', ''),
+                'runtime': fn.get('Runtime', ''),
+                'role_arn': role_arn,
+                'is_public_url': is_public,
+                'has_wildcard_permissions': has_wildcard_role,
+            })
+        return result
+
+    def scan_rds_instances(self):
+        """Collect RDS instance configurations and exposure settings"""
+        result = []
+        try:
+            instances = self.rds.describe_db_instances().get('DBInstances', [])
+        except Exception:
+            return result
+        for db in instances:
+            identifier = db.get('DBInstanceIdentifier', '')
+            if 'graphshield' not in identifier:
+                continue
+            sg_ids = [sg['VpcSecurityGroupId'] for sg in db.get('VpcSecurityGroups', [])]
+            result.append({
+                'resource_type': 'rds',
+                'db_identifier': identifier,
+                'engine': db.get('Engine', ''),
+                'publicly_accessible': db.get('PubliclyAccessible', False),
+                'encrypted': db.get('StorageEncrypted', False),
+                'security_groups': sg_ids,
+                'multi_az': db.get('MultiAZ', False),
+                'backup_retention_days': db.get('BackupRetentionPeriod', 0),
+            })
+        return result
+
     def scan_cloudtrail(self):
         """Check if CloudTrail logging is enabled"""
         try:
@@ -150,8 +234,11 @@ class AWSScanner:
             'security_groups': self.scan_security_groups(),
             's3_buckets': self.scan_s3_buckets(),
             'iam_roles': self.scan_iam_roles(),
+            'lambda_functions': self.scan_lambda_functions(),
+            'rds_instances': self.scan_rds_instances(),
             'cloudtrail': self.scan_cloudtrail(),
         }
+
 
 if __name__ == '__main__':
     scenario_id = sys.argv[1] if len(sys.argv) > 1 else 'UNKNOWN'
@@ -162,4 +249,6 @@ if __name__ == '__main__':
     with open(out_path, 'w') as f:
         json.dump(data, f, indent=2, default=str)
     print(f'Saved to {out_path}')
-    print(f'Found: {len(data["ec2_instances"])} EC2, {len(data["s3_buckets"])} S3, {len(data["iam_roles"])} IAM roles')
+    print(f'Found: {len(data["ec2_instances"])} EC2, {len(data["s3_buckets"])} S3, '
+          f'{len(data["iam_roles"])} IAM roles, {len(data["lambda_functions"])} Lambda, '
+          f'{len(data["rds_instances"])} RDS')
