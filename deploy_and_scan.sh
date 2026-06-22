@@ -10,7 +10,7 @@ source venv/Scripts/activate
 
 # List of all scenarios and their IDs
 declare -A SCENARIOS=(
-  #["S01_baseline_secure"]="S01"
+  ["S01_baseline_secure"]="S01"
   ["S02_public_s3_only"]="S02"
   ["S03_open_ssh_only"]="S03"
   ["S04_no_cloudtrail"]="S04"
