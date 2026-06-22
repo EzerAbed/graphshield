@@ -1,0 +1,176 @@
+{
+  "scenario_id": "S04",
+  "scan_timestamp": "2026-06-22T10:44:59.374004",
+  "region": "us-east-1",
+  "ec2_instances": [
+    {
+      "resource_type": "ec2",
+      "instance_id": "i-055aea3c328ff4864",
+      "instance_type": "t3.micro",
+      "state": "running",
+      "public_ip": null,
+      "private_ip": "10.4.1.136",
+      "internet_facing": false,
+      "subnet_id": "subnet-0076c58ce40956432",
+      "vpc_id": "vpc-0a49fb768da541c88",
+      "iam_profile": "arn:aws:iam::670069047981:instance-profile/graphshield-s04-profile",
+      "security_groups": [
+        "sg-06592750b2aef6116"
+      ],
+      "imds_v2": "required",
+      "ebs_encrypted": true,
+      "tags": {
+        "Name": "graphshield-s04-ec2",
+        "Scenario": "S04"
+      }
+    }
+  ],
+  "security_groups": [
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-05b31d0e2b741adfb",
+      "group_name": "default",
+      "vpc_id": "vpc-0a49fb768da541c88",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-05b31d0e2b741adfb"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-026cfa0d4d5ac8177",
+      "group_name": "default",
+      "vpc_id": "vpc-0e8eb30784bdb0981",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 1,
+      "rules": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "670069047981",
+              "GroupId": "sg-026cfa0d4d5ac8177"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "resource_type": "security_group",
+      "group_id": "sg-06592750b2aef6116",
+      "group_name": "graphshield-s04-sg",
+      "vpc_id": "vpc-0a49fb768da541c88",
+      "ssh_open_world": false,
+      "rdp_open_world": false,
+      "all_traffic_open": false,
+      "inbound_rule_count": 0,
+      "rules": []
+    }
+  ],
+  "s3_buckets": [
+    {
+      "resource_type": "s3",
+      "bucket_name": "graphshield-s04-bucket-s04abc",
+      "is_public": false,
+      "encryption": true,
+      "versioning": "Disabled"
+    }
+  ],
+  "iam_roles": [
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s04-role",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s04-role",
+      "has_admin_access": false,
+      "has_s3_wildcard": false,
+      "privilege_depth": 1,
+      "attached_policies": [],
+      "inline_policies": [
+        "graphshield-s04-minimal"
+      ]
+    },
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s10-ec2-role",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s10-ec2-role",
+      "has_admin_access": false,
+      "has_s3_wildcard": true,
+      "privilege_depth": 2,
+      "attached_policies": [],
+      "inline_policies": [
+        "graphshield-s10-s3-full"
+      ]
+    },
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s11-ec2-role",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s11-ec2-role",
+      "has_admin_access": false,
+      "has_s3_wildcard": false,
+      "privilege_depth": 1,
+      "attached_policies": [],
+      "inline_policies": [
+        "graphshield-s11-s3-read"
+      ]
+    },
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s13-ec2-role",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s13-ec2-role",
+      "has_admin_access": false,
+      "has_s3_wildcard": false,
+      "privilege_depth": 1,
+      "attached_policies": [],
+      "inline_policies": [
+        "graphshield-s13-escalation"
+      ]
+    },
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s14-admin",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s14-admin",
+      "has_admin_access": true,
+      "has_s3_wildcard": false,
+      "privilege_depth": 3,
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "inline_policies": []
+    },
+    {
+      "resource_type": "iam_role",
+      "role_name": "graphshield-s15-admin",
+      "role_arn": "arn:aws:iam::670069047981:role/graphshield-s15-admin",
+      "has_admin_access": true,
+      "has_s3_wildcard": false,
+      "privilege_depth": 3,
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "inline_policies": []
+    }
+  ],
+  "cloudtrail": {
+    "resource_type": "cloudtrail",
+    "logging_enabled": false
+  }
+}
