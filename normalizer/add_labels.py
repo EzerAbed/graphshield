@@ -25,3 +25,15 @@ LABELS = {
     'S24': {'risk_level': 1, 'risk_label': 'Low', 'exploitability': 0.3, 'blast_radius': 0.2},
     'S25': {'risk_level': 3, 'risk_label': 'High', 'exploitability': 0.65, 'blast_radius': 0.7},
 }
+
+
+import pandas as pd
+
+df = pd.read_csv('dataset/features_combined.csv')
+
+for col in ['risk_level', 'risk_label', 'exploitability', 'blast_radius']:
+    df[col] = df['scenario_id'].map(lambda sid: LABELS.get(sid, {}).get(col, None))
+
+df.to_csv('dataset/labeled_dataset.csv', index=False)
+print('Labeled dataset saved: dataset/labeled_dataset.csv')
+print(df[['scenario_id', 'risk_label', 'exploitability', 'blast_radius']].to_string())
